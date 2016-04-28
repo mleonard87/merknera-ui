@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 import styles from './CoreLayout.scss';
 import '../../styles/core.scss';
 
@@ -20,10 +21,12 @@ function CoreLayout ({ children }) {
       <section className={styles.content}>
         <nav>
           <ul>
-            <li className={styles.activeMenuItem}>Home</li>
-            <li>Bots</li>
-            <li>Games</li>
-            <li>Users</li>
+            <li className={styles.activeMenuItem}>
+              <Link to='/'>Home</Link>
+            </li>
+            <li><Link to='/bots'>Bots</Link></li>
+            <li><Link to='/games'>Games</Link></li>
+            <li><Link to='/users'>Users</Link></li>
           </ul>
         </nav>
         <article>

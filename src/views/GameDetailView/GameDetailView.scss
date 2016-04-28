@@ -1,0 +1,10 @@
+.board {
+  font-size: 3em;
+
+  span {
+    display: inline-block;
+    border: 1px solid black;
+    width: 60px;
+    height: 60px;
+  }
+}

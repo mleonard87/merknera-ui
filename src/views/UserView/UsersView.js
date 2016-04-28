@@ -17,7 +17,7 @@ import React, { PropTypes } from 'react';
 // We avoid using the `@connect` decorator on the class definition so
 // that we can export the undecorated component for testing.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
-export class HomeView extends React.Component {
+export class UsersView extends React.Component {
   // props: Props;
   // static propTypes = {
   //   counter: PropTypes.number.isRequired,
@@ -28,7 +28,7 @@ export class HomeView extends React.Component {
   render () {
     return (
       <div>
-        Home
+        Users
       </div>
     );
   }
@@ -42,4 +42,4 @@ export class HomeView extends React.Component {
 //   doubleAsync
 // })(HomeView);
 
-export default HomeView;
+export default UsersView;

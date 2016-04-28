@@ -22,6 +22,8 @@
     "semi" : [2, "always"],
     "max-len": [2, 120, 2],
     "flow-vars/define-flow-type": 1,
-    "flow-vars/use-flow-type": 1
+    "flow-vars/use-flow-type": 1,
+    "comma-dangle": [0, "never"],
+    "no-eval": 1,
   }
 }

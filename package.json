@@ -35,7 +35,8 @@
       "command": "nodemon --exec babel-node bin/server",
       "env": {
         "NODE_ENV": "development",
-        "DEBUG": "app:*"
+        "DEBUG": "app:*",
+        "GRAPHQL_URL": "http://localhost:8080/graphql"
       }
     },
     "deploy": {

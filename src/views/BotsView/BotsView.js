@@ -1,9 +1,10 @@
 /* @flow */
 import React, { PropTypes } from 'react';
-// import { connect } from 'react-redux';
-// import { increment, doubleAsync } from '../../redux/modules/counter';
+import { connect } from 'react-redux';
+import { listBots } from '../../redux/modules/bots';
+import BotList from 'components/BotList';
 // import DuckImage from './Duck.jpg';
-// import classes from './HomeView.scss';
+// import classes from './BotsView.scss';
 
 // We can use Flow (http://flowtype.org/) to type our component's props
 // and state. For convenience we've included both regular propTypes and
@@ -17,29 +18,29 @@ import React, { PropTypes } from 'react';
 // We avoid using the `@connect` decorator on the class definition so
 // that we can export the undecorated component for testing.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
-export class HomeView extends React.Component {
+export class BotsView extends React.Component {
   // props: Props;
-  // static propTypes = {
-  //   counter: PropTypes.number.isRequired,
-  //   doubleAsync: PropTypes.func.isRequired,
-  //   increment: PropTypes.func.isRequired
-  // };
+  static propTypes = {
+    listBots: PropTypes.func.isRequired,
+    bots: PropTypes.array.isRequired,
+  };
+
+  componentDidMount = () => {
+    console.log('componentDidMount');
+    this.props.listBots();
+  }
 
   render () {
     return (
-      <div>
-        Home
-      </div>
+      <BotList bots={this.props.bots.botsList} />
     );
   }
 }
 
-// const mapStateToProps = (state) => ({
-//   counter: state.counter
-// });
-// export default connect(mapStateToProps, {
-//   increment: () => increment(1),
-//   doubleAsync
-// })(HomeView);
+const mapStateToProps = (state) => ({
+  bots: state.bots
+});
 
-export default HomeView;
+export default connect(mapStateToProps, {
+  listBots: () => listBots(),
+})(BotsView);

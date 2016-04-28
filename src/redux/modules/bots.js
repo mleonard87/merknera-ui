@@ -2,7 +2,8 @@
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const COUNTER_INCREMENT = 'COUNTER_INCREMENT';
+export const LIST_BOTS_FETCH = 'LIST_BOTS_FETCH';
+export const LIST_BOTS_FETCH_SUCCESS = 'LIST_BOTS_FETCH_SUCCESS';
 
 // ------------------------------------
 // Actions
@@ -12,40 +13,54 @@ export const COUNTER_INCREMENT = 'COUNTER_INCREMENT';
 // if you'd like to learn more you can check out: flowtype.org.
 // DOUBLE NOTE: there is currently a bug with babel-eslint where a `space-infix-ops` error is
 // incorrectly thrown when using arrow functions, hence the oddity.
-export function increment (value: number = 1): Action {
+export function listBots (): Action {
   return {
-    type: COUNTER_INCREMENT,
-    payload: value
+    type: LIST_BOTS_FETCH,
+    meta: {
+      query: `
+      {
+        botList {
+      		id,
+          name,
+          user {
+            username
+          },
+          gameType {
+            name
+          },
+          gamesPlayed,
+          gamesWon
+        },
+      }
+      `,
+      success: listBotsSuccess,
+    }
   };
 }
 
-// This is a thunk, meaning it is a function that immediately
-// returns a function for lazy evaluation. It is incredibly useful for
-// creating async actions, especially when combined with redux-thunk!
-// NOTE: This is solely for demonstration purposes. In a real application,
-// you'd probably want to dispatch an action of COUNTER_DOUBLE and let the
-// reducer take care of this logic.
-export const doubleAsync = (): Function => {
-  return (dispatch: Function, getState: Function): Promise => {
-    return new Promise((resolve: Function): void => {
-      setTimeout(() => {
-        dispatch(increment(getState().counter));
-        resolve();
-      }, 200);
-    });
+export function listBotsSuccess (response): Action {
+  return {
+    type: LIST_BOTS_FETCH_SUCCESS,
+    payload: {
+      bots: response.botList,
+    },
   };
-};
+}
 
 export const actions = {
-  increment,
-  doubleAsync
+  listBots,
 };
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [COUNTER_INCREMENT]: (state: number, action: {payload: number}): number => state + action.payload
+  [LIST_BOTS_FETCH_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      botsList: action.payload.bots
+    };
+  },
 };
 
 // ------------------------------------
