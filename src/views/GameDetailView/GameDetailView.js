@@ -29,10 +29,22 @@ export class GameDetailView extends React.Component {
   static propTypes = {
     gameActions: PropTypes.object.isRequired,
     currentGame: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired,
   };
 
   componentDidMount = () => {
-    this.props.gameActions.getGameDetail(1);
+    this.props.gameActions.getGameDetail(this.props.params.id);
+  }
+
+  componentWillUnmount = () => {
+    this.props.gameActions.clearGameDetail();
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    this.setState({
+      ...this.state,
+      currentlyDisplayedMove: nextProps.currentGame.moves.length - 1,
+    });
   }
 
   handleSliderOnChange = (e) => {
@@ -43,6 +55,10 @@ export class GameDetailView extends React.Component {
   }
 
   render () {
+    if (!this.props.currentGame) {
+      return (<span>Loading...</span>);
+    }
+
     const renderBoard = () => {
       let gs = this.props.currentGame.moves[this.state.currentlyDisplayedMove].gameState;
       gs = eval(gs);
