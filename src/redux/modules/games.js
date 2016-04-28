@@ -6,6 +6,7 @@ export const LIST_GAMES_FETCH = 'LIST_GAMES_FETCH';
 export const LIST_GAMES_FETCH_SUCCESS = 'LIST_GAMES_FETCH_SUCCESS';
 export const GAME_DETAIL_FETCH = 'GAME_DETAIL_FETCH';
 export const GAME_DETAIL_FETCH_SUCCESS = 'GAME_DETAIL_FETCH_SUCCESS';
+export const GAME_DETAIL_CLEAR = 'GAME_DETAIL_CLEAR';
 
 // ------------------------------------
 // Actions
@@ -49,7 +50,6 @@ export function listGamesSuccess (response): Action {
 }
 
 export const getGameDetail = (gameId) => {
-  console.log('game id: ' + gameId);
   return {
     type: GAME_DETAIL_FETCH,
     meta: {
@@ -85,10 +85,9 @@ export const getGameDetail = (gameId) => {
       success: getGameDetailSuccess,
     }
   };
-}
+};
 
 export function getGameDetailSuccess (response): Action {
-  console.log(response);
   const newMoves = response.game.moves.map((m) => {
     return {
       ...m,
@@ -107,9 +106,16 @@ export function getGameDetailSuccess (response): Action {
   };
 }
 
+export function clearGameDetail (): Action {
+  return {
+    type: GAME_DETAIL_CLEAR,
+  };
+}
+
 export const actions = {
   listGames,
   getGameDetail,
+  clearGameDetail,
 };
 
 // ------------------------------------
@@ -127,6 +133,15 @@ const ACTION_HANDLERS = {
       ...state,
       currentGame: action.payload.game
     };
+  },
+  [GAME_DETAIL_CLEAR]: (state, action) => {
+    let newState = {
+      ...state
+    };
+
+    delete newState.currentGame;
+
+    return newState;
   },
 };
 
