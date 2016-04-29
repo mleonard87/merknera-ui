@@ -16,12 +16,12 @@ section.content {
   margin-right: auto;
   width: 994px;
   background-color: #fff;
-  height: 100%;
+  min-height: 100%;
   margin-top: 50px;
   border-radius: 4px;
 }
 
-nav {
+nav.main {
   border-bottom: 1px solid #ccc;
 }
 
@@ -42,4 +42,8 @@ footer {
   color: #fff;
   font-size: 0.8em;
   margin: 2em 0;
+}
+
+article.main {
+  padding: 1em;
 }

@@ -59,9 +59,33 @@ export class GameDetailView extends React.Component {
       return (<span>Loading...</span>);
     }
 
+    const newMoveMarker = (i, j) => {
+      if (i === j) {
+        return <span>*</span>;
+      } else {
+        return null;
+      }
+    };
+
     const renderBoard = () => {
-      let gs = this.props.currentGame.moves[this.state.currentlyDisplayedMove].gameState;
+      let moveIdx = this.state.currentlyDisplayedMove;
+      let gs = this.props.currentGame.moves[moveIdx].gameState;
       gs = eval(gs);
+      let prevGs;
+      if (this.props.currentGame.moves[moveIdx - 1] === undefined) {
+        prevGs = ['', '', '', '', '', '', '', '', ''];
+      } else {
+        prevGs = this.props.currentGame.moves[moveIdx - 1].gameState;
+      }
+      let newMoveIdx;
+      gs.find((m, i) => {
+        console.log(m, prevGs[i]);
+        if (m != prevGs[i]) {
+          newMoveIdx = i;
+          return m;
+        }
+      });
+      console.log('new move: ' + newMoveIdx);
       return (
         <div className={styles.board}>
           <div>
@@ -114,15 +138,17 @@ export class GameDetailView extends React.Component {
         <br />
         <br />
 
-        <input
-          id='move-slider'
-          type='range'
-          min='0'
-          max={this.props.currentGame.moves.length - 1}
-          step='1'
-          onChange={this.handleSliderOnChange}
-          value={this.state.currentlyDisplayedMove}
-          />
+        <div className={styles.sliderContainer}>
+          <input
+            id='move-slider'
+            type='range'
+            min='0'
+            max={this.props.currentGame.moves.length - 1}
+            step='1'
+            onChange={this.handleSliderOnChange}
+            value={this.state.currentlyDisplayedMove}
+            />
+        </div>
 
         <br />
         <br />

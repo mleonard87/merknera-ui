@@ -32,6 +32,14 @@ export function listGames (): Action {
               name
             }
           },
+          winningMove {
+            gameBot {
+              bot {
+                name
+              }
+            }
+          },
+          status
         }
       }
       `,
@@ -75,7 +83,6 @@ export const getGameDetail = (gameId) => {
               },
               gameState
             }
-            status
           }
         }
       `,

@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 import styles from './CoreLayout.scss';
 import '../../styles/core.scss';
 
@@ -12,36 +13,57 @@ import '../../styles/core.scss';
 //
 // CoreLayout is a pure function of its props, so we can
 // define it with a plain javascript function...
-function CoreLayout ({ children }) {
-  return (
-    <div className={styles.wrapper}>
-      <header className={styles.main}>
-        Merknera
-      </header>
-      <section className={styles.content}>
-        <nav>
-          <ul>
-            <li className={styles.activeMenuItem}>
-              <Link to='/'>Home</Link>
-            </li>
-            <li><Link to='/bots'>Bots</Link></li>
-            <li><Link to='/games'>Games</Link></li>
-            <li><Link to='/users'>Users</Link></li>
-          </ul>
-        </nav>
-        <article>
-          {children}
-        </article>
-      </section>
-      <footer>
-        &copy; 2016 Mike Leonard - Merknera on Github
-      </footer>
-    </div>
-  );
+export class CoreLayout extends React.Component {
+  render () {
+    const getActiveClass = (to) => {
+      let pathname = this.props.router.locationBeforeTransitions.pathname;
+      if (to === pathname) {
+        return styles.activeMenuItem;
+      } else {
+        return null;
+      }
+    };
+
+    return (
+      <div className={styles.wrapper}>
+        <header className={styles.main}>
+          Merknera
+        </header>
+        <section className={styles.content}>
+          <nav className={styles.main}>
+            <ul>
+              <li className={getActiveClass('/')}>
+                <Link to='/'>Home</Link>
+              </li>
+              <li className={getActiveClass('/bots')}>
+                <Link to='/bots'>Bots</Link>
+              </li>
+              <li className={getActiveClass('/games')}>
+                <Link to='/games'>Games</Link>
+              </li>
+              <li className={getActiveClass('/users')}>
+                <Link to='/users'>Users</Link>
+              </li>
+            </ul>
+          </nav>
+          <article className={styles.main}>
+            {this.props.children}
+          </article>
+        </section>
+        <footer>
+          &copy; 2016 Mike Leonard - Merknera on Github
+        </footer>
+      </div>
+    );
+  }
 }
 
 CoreLayout.propTypes = {
   children: PropTypes.element
 };
 
-export default CoreLayout;
+const mapStateToProps = (state) => ({
+  router: state.router,
+});
+
+export default connect(mapStateToProps)(CoreLayout);

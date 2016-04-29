@@ -9,14 +9,16 @@ import { Route, IndexRoute } from 'react-router';
 import CoreLayout from 'layouts/CoreLayout/CoreLayout';
 import HomeView from 'views/HomeView/HomeView';
 import BotsView from 'views/BotsView/BotsView';
+import BotDetailView from 'views/BotDetailView/BotDetailView';
 import GamesView from 'views/GamesView/GamesView';
-import UsersView from 'views/UsersView/UsersView';
 import GameDetailView from 'views/GameDetailView/GameDetailView';
+import UsersView from 'views/UsersView/UsersView';
 
 export default (store) => (
   <Route path='/' component={CoreLayout}>
     <IndexRoute component={HomeView} />
     <Route path='/bots' component={BotsView} />
+    <Route path='/bots/:id' component={BotDetailView} />
     <Route path='/games' component={GamesView} />
     <Route path='/games/:id' component={GameDetailView} />
     <Route path='/users' component={UsersView} />

@@ -23,6 +23,16 @@ export class GameList extends React.Component {
       );
     };
 
+    const getWinner = (game) => {
+      if (game.winningMove) {
+        return (
+          <span>{game.winningMove.gameBot.bot.name}</span>
+        );
+      } else {
+        return null;
+      }
+    };
+
     const games = () => {
       if (this.props.games) {
         return (
@@ -32,6 +42,8 @@ export class GameList extends React.Component {
                 return (
                   <tr>
                     <td>{getPlayers(g.players)}</td>
+                    <td>{g.status}</td>
+                    <td>{getWinner(g)}</td>
                     <td><Link to={`/games/${g.id}`}>View</Link></td>
                   </tr>
                 );
@@ -51,6 +63,8 @@ export class GameList extends React.Component {
         <thead>
           <tr>
             <th>Players</th>
+            <th>Status</th>
+            <th>Winner</th>
             <th>Options</th>
           </tr>
         </thead>

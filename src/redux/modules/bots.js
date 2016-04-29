@@ -4,6 +4,11 @@
 // ------------------------------------
 export const LIST_BOTS_FETCH = 'LIST_BOTS_FETCH';
 export const LIST_BOTS_FETCH_SUCCESS = 'LIST_BOTS_FETCH_SUCCESS';
+export const GET_BOT_DETAIL_FETCH = 'GET_BOT_DETAIL_FETCH';
+export const GET_BOT_DETAIL_FETCH_SUCCESS = 'GET_BOT_DETAIL_FETCH_SUCCESS';
+export const LIST_GAMES_FOR_BOT_FETCH = 'LIST_GAMES_FOR_BOT_FETCH';
+export const LIST_GAMES_FOR_BOT_FETCH_SUCCESS = 'LIST_GAMES_FOR_BOT_FETCH_SUCCESS';
+export const BOT_DETAIL_CLEAR = 'BOT_DETAIL_CLEAR';
 
 // ------------------------------------
 // Actions
@@ -22,6 +27,7 @@ export function listBots (): Action {
         botList {
       		id,
           name,
+          version,
           user {
             username
           },
@@ -29,7 +35,8 @@ export function listBots (): Action {
             name
           },
           gamesPlayed,
-          gamesWon
+          gamesWon,
+          status
         },
       }
       `,
@@ -47,8 +54,98 @@ export function listBotsSuccess (response): Action {
   };
 }
 
+export function getBotDetail (botId): Action {
+  return {
+    type: GET_BOT_DETAIL_FETCH,
+    meta: {
+      query: `
+      query getBot($botId: Int!) {
+        bot(id: $botId) {
+          id,
+          name,
+          gamesWon,
+          version,
+          programmingLanguage,
+          gameType {
+            name
+          },
+          website,
+          description
+        }
+      }
+      `,
+      variables: `{
+        "botId": "${botId}"
+      }`,
+      success: getBotDetailSuccess,
+    }
+  };
+}
+
+export function getBotDetailSuccess (response): Action {
+  return {
+    type: GET_BOT_DETAIL_FETCH_SUCCESS,
+    payload: {
+      bot: response.bot,
+    },
+  };
+}
+
+export function listGamesForBot (botId): Action {
+  return {
+    type: LIST_GAMES_FOR_BOT_FETCH,
+    meta: {
+      query: `
+      query getGamesForBot($botId: Int!) {
+        gameList(botId: $botId) {
+          id,
+          gameType {
+            name
+          },
+          players {
+            bot {
+              name
+            }
+          },
+          winningMove {
+            gameBot {
+              bot {
+                name
+              }
+            }
+          },
+          status
+        }
+      }
+      `,
+      variables: `{
+        "botId": "${botId}"
+      }`,
+      success: listGamesForBotSuccess,
+    }
+  };
+}
+
+export function listGamesForBotSuccess (response): Action {
+  return {
+    type: LIST_GAMES_FOR_BOT_FETCH_SUCCESS,
+    payload: {
+      games: response.gameList,
+    },
+  };
+}
+
+export function clearBotDetail (): Action {
+  return {
+    type: BOT_DETAIL_CLEAR,
+  };
+}
+
 export const actions = {
   listBots,
+  getBotDetail,
+  listGamesForBot,
+  clearBotDetail,
 };
 
 // ------------------------------------
@@ -58,8 +155,35 @@ const ACTION_HANDLERS = {
   [LIST_BOTS_FETCH_SUCCESS]: (state, action) => {
     return {
       ...state,
-      botsList: action.payload.bots
+      botsList: action.payload.bots,
     };
+  },
+  [LIST_GAMES_FOR_BOT_FETCH_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      currentBot: {
+        ...state.currentBot,
+        gamesPlayed: action.payload.games
+      },
+    };
+  },
+  [GET_BOT_DETAIL_FETCH_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      currentBot: {
+        ...state.currentBot,
+        ...action.payload.bot,
+      },
+    };
+  },
+  [BOT_DETAIL_CLEAR]: (state, action) => {
+    let newState = {
+      ...state
+    };
+
+    delete newState.currentBot;
+
+    return newState;
   },
 };
 

@@ -1,2 +1,2 @@
-import GamesView from './GamesView';
-export default GamesView;
+import GamesDetailView from './GamesDetailView';
+export default GamesDetailView;
