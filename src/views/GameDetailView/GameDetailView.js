@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { actions as gameActions } from '../../redux/modules/games';
 import TicTacToeBoard from 'components/TicTacToeBoard';
 import MoveList from 'components/MoveList';
+import GameDetailHeader from 'components/GameDetailHeader';
 import styles from './GameDetailView.scss';
 // import GameList from 'components/GameList';
 
@@ -68,7 +69,7 @@ export class GameDetailView extends React.Component {
       return (<span>Loading...</span>);
     }
 
-    const winner = this.props.currentGame.moves[this.props.currentGame.moves.length - 1].gameBot.bot.name;
+    const lastMove = this.props.currentGame.moves[this.props.currentGame.moves.length - 1];
 
     const currentGameState = this.props.currentGame.moves[this.state.currentlyDisplayedMove].gameState;
     const previousMove = this.props.currentGame.moves[this.state.currentlyDisplayedMove - 1];
@@ -81,7 +82,10 @@ export class GameDetailView extends React.Component {
 
     return (
       <div>
-        <h1>Winner: {winner}</h1>
+        <GameDetailHeader
+          game={this.props.currentGame}
+          lastMove={lastMove}
+          />
         <div className={styles.boardContainer}>
           <TicTacToeBoard
             currentGameState={currentGameState}

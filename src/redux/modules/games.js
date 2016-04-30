@@ -73,6 +73,7 @@ export const getGameDetail = (gameId) => {
                 name
               }
             },
+            status,
             moves {
               id,
               gameBot {
@@ -81,7 +82,8 @@ export const getGameDetail = (gameId) => {
                   name
                 }
               },
-              gameState
+              gameState,
+              winner
             }
           }
         }
