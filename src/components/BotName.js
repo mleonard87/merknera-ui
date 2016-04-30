@@ -8,8 +8,7 @@ export class BotName extends React.Component {
   static propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    version: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
+    version: PropTypes.string.isRequired
   };
 
   render () {

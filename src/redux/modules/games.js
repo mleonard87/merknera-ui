@@ -29,7 +29,9 @@ export function listGames (): Action {
           },
           players {
             bot {
-              name
+              id,
+              name,
+              version
             }
           },
           winningMove {
@@ -70,7 +72,9 @@ export const getGameDetail = (gameId) => {
             },
             players {
               bot {
-                name
+                id,
+                name,
+                version
               }
             },
             status,

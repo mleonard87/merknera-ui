@@ -109,7 +109,9 @@ export function listGamesForBot (botId): Action {
           },
           players {
             bot {
-              name
+              id,
+              name,
+              version,
             }
           },
           winningMove {

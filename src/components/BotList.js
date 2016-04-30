@@ -23,7 +23,6 @@ export class BotList extends React.Component {
                         id={b.id}
                         name={b.name}
                         version={b.version}
-                        status={b.status}
                         />
                     </td>
                     <td>{b.status}</td>

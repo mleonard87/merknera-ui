@@ -1,6 +1,7 @@
 /* @flow */
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+import BotName from 'components/BotName';
 
 export class GameList extends React.Component {
   // props: Props;
@@ -15,7 +16,13 @@ export class GameList extends React.Component {
           {
             players.map((p) => {
               return (
-                <li>{p.bot.name}</li>
+                <li>
+                  <BotName
+                    id={p.bot.id}
+                    name={p.bot.name}
+                    version={p.bot.version}
+                    />
+                </li>
               );
             })
           }
