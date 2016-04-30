@@ -27,6 +27,15 @@
     box-sizing: inherit;
   }
 
+  a,
+  a:visited {
+    color: $primary-color;
+  }
+
+  a:hover {
+    color: $secondary-background-color;
+  }
+
   footer {
     text-align: center;
     font-size: 0.8em;
