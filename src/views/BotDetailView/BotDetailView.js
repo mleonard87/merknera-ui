@@ -51,7 +51,10 @@ export class BotDetailView extends React.Component {
     const renderGamesList = () => {
       if (bot.games) {
         return (
-          <GameList games={bot.games} />
+          <GameList
+            games={bot.games}
+            contextBot={bot}
+            />
         );
       } else {
         return (

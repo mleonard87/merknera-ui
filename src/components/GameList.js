@@ -2,19 +2,25 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import BotName from 'components/BotName';
+import styles from './GameList.scss';
 
 export class GameList extends React.Component {
   // props: Props;
   static propTypes = {
+    contextBot: PropTypes.object,
     games: PropTypes.array.isRequired,
   };
 
   render () {
     const getPlayers = (players) => {
       return (
-        <ul>
+        <ul className={styles.playerList}>
           {
             players.map((p) => {
+              if (this.props.contextBot && p.bot.id === this.props.contextBot.id) {
+                return null;
+              }
+
               return (
                 <li>
                   <BotName
@@ -40,6 +46,11 @@ export class GameList extends React.Component {
       }
     };
 
+    let playersHeading = 'Players';
+    if (this.props.contextBot) {
+      playersHeading = 'Opponent';
+    }
+
     const games = () => {
       if (this.props.games) {
         return (
@@ -51,7 +62,7 @@ export class GameList extends React.Component {
                     <td>{getPlayers(g.players)}</td>
                     <td>{g.status}</td>
                     <td>{getWinner(g)}</td>
-                    <td><Link to={`/games/${g.id}`}>View</Link></td>
+                    <td><Link to={`/games/${g.id}`}>View Game</Link></td>
                   </tr>
                 );
               })
@@ -69,7 +80,7 @@ export class GameList extends React.Component {
       <table>
         <thead>
           <tr>
-            <th>Players</th>
+            <th>{playersHeading}</th>
             <th>Status</th>
             <th>Winner</th>
             <th>Options</th>
