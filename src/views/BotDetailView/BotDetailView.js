@@ -30,6 +30,14 @@ export class BotDetailView extends React.Component {
     params: PropTypes.object.isRequired,
   };
 
+  componentWillReceiveProps = (nextProps) => {
+    if (this.props.params.id !== nextProps.params.id) {
+      this.props.botActions.clearBotDetail();
+      this.props.botActions.getBotDetail(nextProps.params.id);
+      this.props.botActions.listGamesForBot(nextProps.params.id);
+    }
+  }
+
   componentDidMount = () => {
     this.props.botActions.getBotDetail(this.props.params.id);
     this.props.botActions.listGamesForBot(this.props.params.id);
