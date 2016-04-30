@@ -1,6 +1,7 @@
 /* @flow */
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import BotName from './BotName';
+import BotWinPercent from './BotWinPercent';
 
 export class BotList extends React.Component {
   // props: Props;
@@ -9,16 +10,6 @@ export class BotList extends React.Component {
   };
 
   render () {
-    const calculateWinPercent = (gamesPlayed, gamesWon) => {
-      let pct = (gamesWon / gamesPlayed) * 100;
-      if (isNaN(pct)) {
-        return '-';
-      } else {
-        let roundedPct = Math.round(pct * 100) / 100;
-        return `${roundedPct}%`;
-      }
-    };
-
     const bots = () => {
       if (this.props.bots) {
         return (
@@ -28,13 +19,23 @@ export class BotList extends React.Component {
                 return (
                   <tr>
                     <td>
-                      <Link to={`/bots/${b.id}`}>{b.name}</Link> ({b.version})
+                      <BotName
+                        id={b.id}
+                        name={b.name}
+                        version={b.version}
+                        status={b.status}
+                        />
                     </td>
                     <td>{b.status}</td>
                     <td>{b.gameType.name}</td>
                     <td>{b.gamesPlayed}</td>
                     <td>{b.gamesWon}</td>
-                    <td>{calculateWinPercent(b.gamesPlayed, b.gamesWon)}</td>
+                    <td>
+                      <BotWinPercent
+                        gamesPlayed={b.gamesPlayed}
+                        gamesWon={b.gamesWon}
+                        />
+                    </td>
                   </tr>
                 );
               })

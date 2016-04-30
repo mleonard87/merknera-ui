@@ -17,7 +17,10 @@ export class CoreLayout extends React.Component {
   render () {
     const getActiveClass = (to) => {
       let pathname = this.props.router.locationBeforeTransitions.pathname;
-      if (to === pathname) {
+
+      if (pathname !== '/' && to === '/') {
+        return null;
+      } else if (pathname.substring(1).startsWith(to.substring(1))) {
         return styles.activeMenuItem;
       } else {
         return null;
@@ -51,7 +54,14 @@ export class CoreLayout extends React.Component {
           </article>
         </section>
         <footer>
-          &copy; 2016 Mike Leonard - Merknera on Github
+          <ul className={styles.footerItems}>
+            <li>&copy; 2016 Mike Leonard</li>
+            <li>
+              <a href='https://github.com/mleonard87/merknera' target='_blank'>
+                Merknera on Github
+              </a>
+            </li>
+          </ul>
         </footer>
       </div>
     );
@@ -59,7 +69,8 @@ export class CoreLayout extends React.Component {
 }
 
 CoreLayout.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.element,
+  router: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

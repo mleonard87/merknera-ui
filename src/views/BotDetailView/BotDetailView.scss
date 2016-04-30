@@ -1,3 +1,5 @@
+@import '../../styles/colors';
+
 .board {
   font-size: 3em;
 
@@ -12,4 +14,44 @@
 
 .sliderContainer {
   width: 300px;
+}
+
+.subHeadingContainer {
+  font-style: italic;
+  color: $secondary-background-color;
+}
+
+.titleVersion {
+  font-size: 0.6em;
+  font-weight: normal;
+  color: $secondary-background-color;
+}
+
+p.description {
+  margin: 1em 0;
+}
+
+.gamesContainer {
+  margin-top: 2em;
+}
+
+.botHeading {
+  display: inline;
+}
+
+.playContainer {
+  float: right;
+  font-size: 1.2em;
+  text-align: right;
+}
+
+.playSummary {
+  font-size: 0.8em;
+  color: $secondary-background-color;
+  font-style: italic;
+}
+
+.playPercent {
+  font-size: 1.4em;
+  font-weight: bold;
 }

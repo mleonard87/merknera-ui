@@ -1,0 +1,23 @@
+.move {
+  cursor: pointer;
+}
+
+.moveContent {
+  margin-left: 2em;
+}
+
+.moveHighlighted {
+  composes: move;
+  background-color: #aef7e9 !important;
+  font-weight: bold;
+
+  .moveContent {
+    margin-left: 1em;
+  }
+
+  .moveContent:before {
+    content: '>';
+    display: inline-block;
+    width: 1em;
+  }
+}

@@ -1,6 +1,9 @@
 :global {
   @import 'base';
   @import 'vendor/normalize';
+  @import 'colors.scss';
+  // $fa-font-path: '../../node_modules/font-awesome/fonts/';
+  // @import '../../node_modules/font-awesome/scss/font-awesome';
 
   // Some best-practice CSS that's useful for most apps
   // Just remove them if they're not what you want
@@ -13,9 +16,9 @@
     margin: 0;
     padding: 0;
     height: 100%;
-    background-color: #333;
-    font-family: 'Avenir Next', 'Helvetica Neue', Hevetica, sans-serif
-
+    background-color: $primary-background-color;
+    font-family: 'Avenir Next', 'Helvetica Neue', Hevetica, sans-serif;
+    color: $primary-text-color;
   }
 
   *,
@@ -30,7 +33,39 @@
     margin: 2em 0;
   }
 
+  table {
+    width: 100%;
+  }
+
+  thead {
+    background-color: $primary-background-color;
+    color: #eee;
+    font-size: 1.1em;
+    line-height: 2.6em;
+  }
+
+  thead tr {
+    border-bottom: 3px #bbb solid;
+  }
+
+  thead th {
+    font-weight: normal;
+  }
+
   tr {
+    line-height: 2em;
     border-bottom: 1px solid #bbb;
+  }
+
+  td, th {
+    padding: 0.2em;
+  }
+
+  td:not(:first-child) {
+    border-left: 1px solid #bbb;
+  }
+
+  tbody tr:nth-child(odd) {
+   background-color: #eee;
   }
 }

@@ -3,6 +3,8 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actions as gameActions } from '../../redux/modules/games';
+import TicTacToeBoard from 'components/TicTacToeBoard';
+import MoveList from 'components/MoveList';
 import styles from './GameDetailView.scss';
 // import GameList from 'components/GameList';
 
@@ -54,106 +56,58 @@ export class GameDetailView extends React.Component {
     });
   }
 
+  handleMoveOnClick = (moveIdx) => {
+    this.setState({
+      ...this.state,
+      currentlyDisplayedMove: moveIdx,
+    });
+  }
+
   render () {
     if (!this.props.currentGame) {
       return (<span>Loading...</span>);
     }
 
-    const newMoveMarker = (i, j) => {
-      if (i === j) {
-        return <span>*</span>;
-      } else {
-        return null;
-      }
-    };
-
-    const renderBoard = () => {
-      let moveIdx = this.state.currentlyDisplayedMove;
-      let gs = this.props.currentGame.moves[moveIdx].gameState;
-      gs = eval(gs);
-      let prevGs;
-      if (this.props.currentGame.moves[moveIdx - 1] === undefined) {
-        prevGs = ['', '', '', '', '', '', '', '', ''];
-      } else {
-        prevGs = this.props.currentGame.moves[moveIdx - 1].gameState;
-      }
-      let newMoveIdx;
-      gs.find((m, i) => {
-        console.log(m, prevGs[i]);
-        if (m != prevGs[i]) {
-          newMoveIdx = i;
-          return m;
-        }
-      });
-      console.log('new move: ' + newMoveIdx);
-      return (
-        <div className={styles.board}>
-          <div>
-            <span>{gs[0]}&nbsp;</span>
-            <span>{gs[1]}&nbsp;</span>
-            <span>{gs[2]}&nbsp;</span>
-          </div>
-          <div>
-            <span>{gs[3]}&nbsp;</span>
-            <span>{gs[4]}&nbsp;</span>
-            <span>{gs[5]}&nbsp;</span>
-          </div>
-          <div>
-            <span>{gs[6]}&nbsp;</span>
-            <span>{gs[7]}&nbsp;</span>
-            <span>{gs[8]}&nbsp;</span>
-          </div>
-        </div>
-      );
-    };
-
-    const renderMoveList = () => {
-      return this.props.currentGame.moves.map((m, i) => {
-        if (parseInt(i) === parseInt(this.state.currentlyDisplayedMove)) {
-          return (
-            <div>{i}: {m.gameBot.bot.name} &lt;---</div>
-          );
-        } else {
-          return (
-            <div>{i}: {m.gameBot.bot.name}</div>
-          );
-        }
-      });
-    };
-
     const winner = this.props.currentGame.moves[this.props.currentGame.moves.length - 1].gameBot.bot.name;
+
+    const currentGameState = this.props.currentGame.moves[this.state.currentlyDisplayedMove].gameState;
+    const previousMove = this.props.currentGame.moves[this.state.currentlyDisplayedMove - 1];
+    let previousGameState;
+    if (previousMove === undefined) {
+      previousGameState = undefined;
+    } else {
+      previousGameState = previousMove.gameState;
+    }
 
     return (
       <div>
-        <br />
-        <br />
-
         <h1>Winner: {winner}</h1>
-
-        <br />
-        <br />
-
-        {renderBoard()}
-
-        <br />
-        <br />
-
-        <div className={styles.sliderContainer}>
+        <div className={styles.boardContainer}>
+          <TicTacToeBoard
+            currentGameState={currentGameState}
+            previousGameState={previousGameState}
+            />
+        </div>
+        <div className={styles.movesContainer}>
+          <h3>Moves</h3>
+          <p className={styles.helpText}>
+            Adjust the slider or click on a move to view that move on the board.
+          </p>
           <input
-            id='move-slider'
             type='range'
+            className={styles.movesSlider}
             min='0'
             max={this.props.currentGame.moves.length - 1}
             step='1'
             onChange={this.handleSliderOnChange}
             value={this.state.currentlyDisplayedMove}
             />
+          <MoveList
+            moves={this.props.currentGame.moves}
+            moveOnClick={this.handleMoveOnClick}
+            highlightMoveIndex={this.state.currentlyDisplayedMove}
+            />
         </div>
-
-        <br />
-        <br />
-
-        {renderMoveList()}
       </div>
     );
   }

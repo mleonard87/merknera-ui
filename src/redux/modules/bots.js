@@ -70,7 +70,12 @@ export function getBotDetail (botId): Action {
             name
           },
           website,
-          description
+          description,
+          gamesWon,
+          gamesPlayed,
+          user {
+            username
+          }
         }
       }
       `,
@@ -163,7 +168,7 @@ const ACTION_HANDLERS = {
       ...state,
       currentBot: {
         ...state.currentBot,
-        gamesPlayed: action.payload.games
+        games: action.payload.games
       },
     };
   },

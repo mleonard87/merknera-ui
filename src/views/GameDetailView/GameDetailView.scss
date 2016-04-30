@@ -1,15 +1,23 @@
-.board {
-  font-size: 3em;
+@import '../../styles/colors';
 
-  span {
-    display: inline-block;
-    border: 1px solid black;
-    width: 60px;
-    height: 60px;
-    text-align: center;
-  }
+.boardContainer {
+  display: inline-block;
+  float: left;
+  padding: 2em;
 }
 
-.sliderContainer {
-  width: 300px;
+.movesContainer {
+  display: inline-block;
+  padding: 2em;
+  margin-right: 0;
+}
+
+.movesSlider {
+  width: 100%;
+}
+
+.helpText {
+  font-size: 0.9em;
+  color: $secondary-background-color;
+  margin: 0.5em 0;
 }

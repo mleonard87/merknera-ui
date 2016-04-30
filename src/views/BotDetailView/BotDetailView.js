@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actions as botActions } from '../../redux/modules/bots';
 import GameList from 'components/GameList';
+import BotWebsiteLink from 'components/BotWebsiteLink';
+import BotWinPercent from 'components/BotWinPercent';
+import Loading from 'components/Loading';
 import styles from './BotDetailView.scss';
 // import GameList from 'components/GameList';
 
@@ -42,17 +45,48 @@ export class BotDetailView extends React.Component {
     }
 
     let bot = this.props.currentBot;
+    const gamesPlayed = bot.gamesPlayed;
+    const gamesWon = bot.gamesWon;
+
+    const renderGamesList = () => {
+      if (bot.games) {
+        return (
+          <GameList games={bot.games} />
+        );
+      } else {
+        return (
+          <Loading />
+        );
+      }
+    };
+
     return (
       <div>
-        <h1>{bot.name}</h1>
-        <p>{bot.description}</p>
-        <p>{bot.programmingLanguage}</p>
-        <p><a href={`${bot.website}`} target='_blank'>{bot.website}</a></p>
+        <div className={styles.headingContainer}>
+          <h1 className={styles.botHeading}>{bot.name} <span className={styles.titleVersion}>({bot.version})</span></h1>
+          <div className={styles.playContainer}>
+            <h1>
+              <BotWinPercent
+                gamesPlayed={gamesPlayed}
+                gamesWon={gamesWon}
+                />
+            </h1>
+            <div className={styles.playSummary}>
+              Played: {gamesPlayed}, Won: {gamesWon}
+            </div>
+          </div>
+        </div>
+        <div className={styles.subHeadingContainer}>
+          by {bot.user.username}, written in {bot.programmingLanguage}
+        </div>
+        <p className={styles.description}>{bot.description}</p>
 
-        <br />
-        <br />
+        <BotWebsiteLink website={bot.website} />
 
-        <GameList games={bot.gamesPlayed} />
+        <div className={styles.gamesContainer}>
+          <h2>Games</h2>
+          {renderGamesList()}
+        </div>
       </div>
     );
   }

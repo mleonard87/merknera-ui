@@ -107,7 +107,7 @@ export function getGameDetailSuccess (response): Action {
     payload: {
       game: {
         ...response.game,
-        move: newMoves,
+        moves: newMoves,
       },
     },
   };
