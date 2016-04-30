@@ -9,6 +9,7 @@ export class MoveListRow extends React.Component {
     moveOnClick: PropTypes.func.isRequired,
     content: PropTypes.string.isRequired,
     highlight: PropTypes.bool.isRequired,
+    status: PropTypes.string.isRequired,
   };
 
   render () {
@@ -17,6 +18,12 @@ export class MoveListRow extends React.Component {
       moveClassName = styles.moveHighlighted;
     } else {
       moveClassName = styles.move;
+    }
+
+    let awaitingMessage = '';
+    if (this.props.status === 'AWAITING') {
+      awaitingMessage = <span className={styles.awaitingIndicator}>(Awaiting Play)</span>;
+      moveClassName = `${moveClassName} ${styles.awaiting}`
     }
 
     return (
@@ -28,7 +35,7 @@ export class MoveListRow extends React.Component {
           {this.props.moveIndex + 1}
         </td>
         <td>
-          <div className={styles.moveContent}>{this.props.content}</div>
+          <div className={styles.moveContent}>{this.props.content}{awaitingMessage}</div>
         </td>
       </tr>
     );

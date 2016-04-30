@@ -87,7 +87,8 @@ export const getGameDetail = (gameId) => {
                 }
               },
               gameState,
-              winner
+              winner,
+              status
             }
           }
         }

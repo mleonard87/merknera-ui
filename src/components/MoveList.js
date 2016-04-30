@@ -23,6 +23,7 @@ export class MoveList extends React.Component {
                   content={m.gameBot.bot.name}
                   moveOnClick={this.props.moveOnClick}
                   highlight={parseInt(this.props.highlightMoveIndex) === parseInt(i)}
+                  status={m.status}
                   />
               );
             })
