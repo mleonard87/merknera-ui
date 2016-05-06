@@ -6,7 +6,7 @@ export class BotWinPercent extends React.Component {
   static propTypes = {
     gamesPlayed: PropTypes.number.isRequired,
     gamesWon: PropTypes.number.isRequired,
-    className: PropTypes.string.isRequired,
+    className: PropTypes.string,
   };
 
   render () {
