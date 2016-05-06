@@ -20,33 +20,35 @@ export function listGames (): Action {
   return {
     type: LIST_GAMES_FETCH,
     meta: {
-      query: `
-      {
-        gameList {
-          id,
-          gameType {
-            name
-          },
-          players {
-            bot {
-              id,
-              name,
-              version
-            }
-          },
-          winningMove {
-            gameBot {
+      graphql: {
+        query: `
+        {
+          gameList {
+            id,
+            gameType {
+              name
+            },
+            players {
               bot {
-                name
+                id,
+                name,
+                version
               }
-            }
-          },
-          status
+            },
+            winningMove {
+              gameBot {
+                bot {
+                  name
+                }
+              }
+            },
+            status
+          }
         }
-      }
-      `,
-      success: listGamesSuccess,
-    }
+        `,
+        success: listGamesSuccess,
+      },
+    },
   };
 }
 
@@ -63,41 +65,43 @@ export const getGameDetail = (gameId) => {
   return {
     type: GAME_DETAIL_FETCH,
     meta: {
-      query: `
-        query getGame ($gameId: Int!) {
-          game(id: $gameId) {
-            id,
-            gameType {
-              name
-            },
-            players {
-              bot {
-                id,
-                name,
-                version
-              }
-            },
-            status,
-            moves {
+      graphql: {
+        query: `
+          query getGame ($gameId: Int!) {
+            game(id: $gameId) {
               id,
-              gameBot {
-                id,
+              gameType {
+                name
+              },
+              players {
                 bot {
-                  name
+                  id,
+                  name,
+                  version
                 }
               },
-              gameState,
-              winner,
-              status
+              status,
+              moves {
+                id,
+                gameBot {
+                  id,
+                  bot {
+                    name
+                  }
+                },
+                gameState,
+                winner,
+                status
+              }
             }
           }
-        }
-      `,
-      variables: `{
-        "gameId": "${gameId}"
-      }`,
-      success: getGameDetailSuccess,
-    }
+        `,
+        variables: `{
+          "gameId": "${gameId}"
+        }`,
+        success: getGameDetailSuccess,
+      },
+    },
   };
 };
 
@@ -163,7 +167,7 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = 0;
-export default function counterReducer (state: number = initialState, action: Action): number {
+export default function gamesReducer (state: number = initialState, action: Action): number {
   const handler = ACTION_HANDLERS[action.type];
 
   return handler ? handler(state, action) : state;
