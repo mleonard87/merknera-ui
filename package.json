@@ -36,7 +36,9 @@
       "env": {
         "NODE_ENV": "development",
         "DEBUG": "app:*",
-        "GRAPHQL_URL": "http://localhost:8080/graphql"
+        "GRAPHQL_URL": "http://localhost:8080/graphql",
+        "LOGIN_URL": "http://localhost:8080/login",
+        "LOGOUT_URL": "http://localhost:8080/logout"
       }
     },
     "deploy": {
@@ -56,7 +58,10 @@
       "command": "npm run deploy",
       "env": {
         "NODE_ENV": "production",
-        "DEBUG": "app:*"
+        "DEBUG": "app:*",
+        "GRAPHQL_URL": "http://api.merknera.com/graphql",
+        "LOGIN_URL": "http://api.merknera.com/login",
+        "LOGOUT_URL": "http://api.merknera.com/logout"
       }
     },
     "start": {

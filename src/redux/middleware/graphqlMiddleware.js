@@ -4,7 +4,7 @@ const graphqlMiddleware = store => next => action => {
   if (action.meta && action.meta.graphql) {
     let options;
 
-    let graphqlUrl = 'http://localhost:8080/graphql';
+    let graphqlUrl = __GRAPHQL_URL__;
 
     options = {
       method: 'post',

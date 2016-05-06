@@ -69,7 +69,7 @@ export class SignInMenu extends React.Component {
       credentials: 'include',
     };
 
-    fetch(`http://localhost:8080/login?id_token=${idToken}`, options)
+    fetch(`${__LOGIN_URL__}?id_token=${idToken}`, options)
     .then((response) => {
       return response.text();
     }).then((resText) => {
@@ -107,7 +107,7 @@ export class SignInMenu extends React.Component {
         credentials: 'include',
       };
 
-      fetch('http://localhost:8080/logout', options)
+      fetch(__LOGOUT_URL__, options)
       .then((response) => {
         return response.text();
       }).then((resText) => {
