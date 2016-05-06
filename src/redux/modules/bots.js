@@ -22,26 +22,29 @@ export function listBots (): Action {
   return {
     type: LIST_BOTS_FETCH,
     meta: {
-      query: `
-      {
-        botList {
-      		id,
-          name,
-          version,
-          user {
-            username
+      graphql: {
+        query: `
+        {
+          botList {
+        		id,
+            name,
+            version,
+            user {
+              id,
+              name
+            },
+            gameType {
+              name
+            },
+            gamesPlayed,
+            gamesWon,
+            status
           },
-          gameType {
-            name
-          },
-          gamesPlayed,
-          gamesWon,
-          status
-        },
-      }
-      `,
-      success: listBotsSuccess,
-    }
+        }
+        `,
+        success: listBotsSuccess,
+      },
+    },
   };
 }
 
@@ -58,32 +61,35 @@ export function getBotDetail (botId): Action {
   return {
     type: GET_BOT_DETAIL_FETCH,
     meta: {
-      query: `
-      query getBot($botId: Int!) {
-        bot(id: $botId) {
-          id,
-          name,
-          gamesWon,
-          version,
-          programmingLanguage,
-          gameType {
-            name
-          },
-          website,
-          description,
-          gamesWon,
-          gamesPlayed,
-          user {
-            username
+      graphql: {
+        query: `
+        query getBot($botId: Int!) {
+          bot(id: $botId) {
+            id,
+            name,
+            gamesWon,
+            version,
+            programmingLanguage,
+            gameType {
+              name
+            },
+            website,
+            description,
+            gamesWon,
+            gamesPlayed,
+            user {
+              id,
+              name
+            }
           }
         }
-      }
-      `,
-      variables: `{
-        "botId": "${botId}"
-      }`,
-      success: getBotDetailSuccess,
-    }
+        `,
+        variables: `{
+          "botId": "${botId}"
+        }`,
+        success: getBotDetailSuccess,
+      },
+    },
   };
 }
 
@@ -100,36 +106,38 @@ export function listGamesForBot (botId): Action {
   return {
     type: LIST_GAMES_FOR_BOT_FETCH,
     meta: {
-      query: `
-      query getGamesForBot($botId: Int!) {
-        gameList(botId: $botId) {
-          id,
-          gameType {
-            name
-          },
-          players {
-            bot {
-              id,
-              name,
-              version,
-            }
-          },
-          winningMove {
-            gameBot {
+      graphql: {
+        query: `
+        query getGamesForBot($botId: Int!) {
+          gameList(botId: $botId) {
+            id,
+            gameType {
+              name
+            },
+            players {
               bot {
-                name
+                id,
+                name,
+                version,
               }
-            }
-          },
-          status
+            },
+            winningMove {
+              gameBot {
+                bot {
+                  name
+                }
+              }
+            },
+            status
+          }
         }
-      }
-      `,
-      variables: `{
-        "botId": "${botId}"
-      }`,
-      success: listGamesForBotSuccess,
-    }
+        `,
+        variables: `{
+          "botId": "${botId}"
+        }`,
+        success: listGamesForBotSuccess,
+      },
+    },
   };
 }
 
@@ -198,7 +206,7 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = 0;
-export default function counterReducer (state: number = initialState, action: Action): number {
+export default function botReducer (state: number = initialState, action: Action): number {
   const handler = ACTION_HANDLERS[action.type];
 
   return handler ? handler(state, action) : state;

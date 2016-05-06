@@ -22,7 +22,7 @@ export class BotsView extends React.Component {
   // props: Props;
   static propTypes = {
     listBots: PropTypes.func.isRequired,
-    bots: PropTypes.array.isRequired,
+    bots: PropTypes.object.isRequired,
   };
 
   componentDidMount = () => {
