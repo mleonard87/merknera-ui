@@ -21,6 +21,29 @@ export class SignInMenu extends React.Component {
     };
   }
 
+  componentDidMount = () => {
+    let gapi = window['gapi'];
+    // This is pretty rubbish. Not sure the best way to wait for this resource
+    // to load. Maybe it can be done with promises?
+    while (gapi === undefined) {
+      gapi = window['gapi'];
+    }
+
+    const authenticateWithMerknera = this.authenticateWithMerknera;
+
+    gapi.load('auth2', function () {
+      gapi.auth2.init();
+
+      const au = gapi.auth2.getAuthInstance();
+      au.isSignedIn.listen((signedIn) => {
+        if (signedIn) {
+          const idToken = au.currentUser.get().getAuthResponse().id_token;
+          authenticateWithMerknera(idToken);
+        }
+      });
+    });
+  }
+
   handleOnClick = () => {
     if (this.state.showUserMenu) {
       this.setState({
@@ -39,6 +62,27 @@ export class SignInMenu extends React.Component {
     });
   };
 
+  authenticateWithMerknera = (idToken) => {
+    let options;
+    options = {
+      method: 'get',
+      credentials: 'include',
+    };
+
+    fetch(`http://localhost:8080/login?id_token=${idToken}`, options)
+    .then((response) => {
+      return response.text();
+    }).then((resText) => {
+      if (resText !== 'OK') {
+        console.log('Did not login.');
+      } else {
+        this.props.getLoggedInUser();
+      }
+    }).catch(function (ex) {
+      console.log(ex);
+    });
+  };
+
   handleOnClickGoogleSignIn = () => {
     this.setState({
       showUserMenu: false,
@@ -49,25 +93,7 @@ export class SignInMenu extends React.Component {
       'scope': 'profile email',
     }).then((googleUser) => {
       const idToken = googleUser.getAuthResponse().id_token;
-
-      let options;
-      options = {
-        method: 'get',
-        credentials: 'include',
-      };
-
-      fetch(`http://localhost:8080/login?id_token=${idToken}`, options)
-      .then((response) => {
-        return response.text();
-      }).then((resText) => {
-        if (resText !== 'OK') {
-          console.log('Did not login.');
-        } else {
-          this.props.getLoggedInUser();
-        }
-      }).catch(function (ex) {
-        console.log(ex);
-      });
+      this.authenticateWithMerknera(idToken);
     });
   };
 
