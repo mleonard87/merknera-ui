@@ -31,7 +31,7 @@ export class MoveListRow extends React.Component {
         className={moveClassName}
         onClick={() => {this.props.moveOnClick(this.props.moveIndex)}}
         >
-        <td>
+        <td className={styles.moveNumberColumn}>
           {this.props.moveIndex + 1}
         </td>
         <td>
