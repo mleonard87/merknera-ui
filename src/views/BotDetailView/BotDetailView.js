@@ -88,7 +88,7 @@ export class BotDetailView extends React.Component {
           </div>
         </div>
         <div className={styles.subHeadingContainer}>
-          by {bot.user.username}, written in {bot.programmingLanguage}
+          by {bot.user.name}, written in {bot.programmingLanguage}
         </div>
         <p className={styles.description}>{bot.description}</p>
 
