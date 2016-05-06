@@ -13,6 +13,7 @@ import BotDetailView from 'views/BotDetailView/BotDetailView';
 import GamesView from 'views/GamesView/GamesView';
 import GameDetailView from 'views/GameDetailView/GameDetailView';
 import UsersView from 'views/UsersView/UsersView';
+import AccountView from 'views/AccountView/AccountView';
 
 export default (store) => (
   <Route path='/' component={CoreLayout}>
@@ -22,5 +23,6 @@ export default (store) => (
     <Route path='/games' component={GamesView} />
     <Route path='/games/:id' component={GameDetailView} />
     <Route path='/users' component={UsersView} />
+    <Route path='/account' component={AccountView} />
   </Route>
 );

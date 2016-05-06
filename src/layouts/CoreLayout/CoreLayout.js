@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
+import SignInMenu from 'containers/SignInMenu';
 import styles from './CoreLayout.scss';
 import '../../styles/core.scss';
 
@@ -30,7 +31,8 @@ export class CoreLayout extends React.Component {
     return (
       <div className={styles.wrapper}>
         <header className={styles.main}>
-          Merknera
+          <h1>Merknera</h1>
+          <SignInMenu />
         </header>
         <section className={styles.content}>
           <nav className={styles.main}>

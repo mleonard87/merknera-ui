@@ -4,6 +4,15 @@
   <title>Merknera</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    function onLoad() {
+      gapi.load('auth2', function() {
+        gapi.auth2.init();
+      });
+    }
+  </script>
+  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+  <meta name="google-signin-client_id" content="968663735633-vge4b05ua8rupaec74l3sga2vj8lv9jf.apps.googleusercontent.com">
 </head>
 <body>
   <div id="root" style="height: 100%"></div>

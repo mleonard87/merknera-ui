@@ -1,0 +1,56 @@
+@import '../styles/colors';
+
+.userMenu {
+  float: right;
+  font-size: 0.5em;
+  min-width: 100px;
+  text-align: center;
+  padding: 0 1em;
+}
+
+.userMenu:hover {
+  background-color: darken($primary-color, 20);
+  cursor: pointer;
+}
+
+.userMenuDropDown {
+  position: absolute;
+  right: 0;
+  width: 12em;
+  background-color: darken($primary-color, 20);
+  text-align: left;
+  -webkit-box-shadow: -5px 5px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: -5px 5px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: -5px 5px 5px 0px rgba(0,0,0,0.75);
+}
+
+.googleIcon {
+  vertical-align: middle;
+  margin: -0.5em 0.5em 0 0;
+}
+
+.userMenuList {
+  list-style: none;
+}
+
+.userMenuList li {
+  padding: 0 0.5em;
+}
+
+.userMenuList li:hover {
+  background-color: darken($primary-color, 10);
+  cursor: pointer;
+}
+
+a.userMenuLink {
+  line-height: 2.8em;
+  display: inline-block;
+  width: 100%;
+}
+
+a.userMenuLink,
+a.userMenuLink:hover,
+a.userMenuLink:visited {
+  color: #fff;
+  text-decoration: none;
+}

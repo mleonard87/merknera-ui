@@ -1,0 +1,29 @@
+@import '../styles/colors';
+
+.newTokenContainer {
+  padding: 1.3em;
+  background-color: #adffef;
+  margin-bottom: 1em;
+}
+
+.tokenDescriptionInput {
+  font-size: 1.3em;
+  width: 80%;
+}
+
+.tokenGenerateButton {
+  width: 18%;
+  font-size: 1em;
+  vertical-align: top;
+  line-height: 1.6em;
+  float: right;
+}
+
+.tokenAnother {
+  font-size: 0.9em;
+  margin-left: 1em;
+}
+
+.latestToken {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
