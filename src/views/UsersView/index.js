@@ -1,2 +1,2 @@
-import HomeView from './HomeView';
-export default HomeView;
+import UsersView from './UsersView';
+export default UsersView;
