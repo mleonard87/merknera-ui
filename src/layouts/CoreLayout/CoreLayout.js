@@ -32,6 +32,7 @@ export class CoreLayout extends React.Component {
       <div className={styles.wrapper}>
         <header className={styles.main}>
           <h1>Merknera</h1>
+          <span className={styles.betaTag}>Beta</span>
           <SignInMenu />
         </header>
         <section className={styles.content}>

@@ -96,3 +96,16 @@ footer a:visited {
 footer a:hover {
   text-decoration: underline;
 }
+
+.betaTag {
+  background-color: #E0B400;
+  font-size: 0.2em;
+  padding: 0 0.5em;
+  border-radius: 4px;
+  position: absolute;
+  height: 1.4em;
+  line-height: 1.4em;
+  margin-left: -3.5em;
+  margin-top: 0.7em;
+  text-transform: uppercase;
+}
