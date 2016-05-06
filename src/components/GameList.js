@@ -2,6 +2,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import BotName from 'components/BotName';
+import Loading from 'components/Loading';
 import styles from './GameList.scss';
 
 export class GameList extends React.Component {
@@ -12,6 +13,12 @@ export class GameList extends React.Component {
   };
 
   render () {
+    if (!this.props.games) {
+      return (
+        <Loading />
+      );
+    }
+
     const getPlayers = (players) => {
       return (
         <ul className={styles.playerList}>
@@ -52,28 +59,22 @@ export class GameList extends React.Component {
     }
 
     const games = () => {
-      if (this.props.games) {
-        return (
-          <tbody>
-            {
-              this.props.games.map((g) => {
-                return (
-                  <tr>
-                    <td>{getPlayers(g.players)}</td>
-                    <td>{g.status}</td>
-                    <td>{getWinner(g)}</td>
-                    <td><Link to={`/games/${g.id}`}>View Game</Link></td>
-                  </tr>
-                );
-              })
-            }
-          </tbody>
-        );
-      } else {
-        return (
-          <span>Loading...</span>
-        );
-      }
+      return (
+        <tbody>
+          {
+            this.props.games.map((g) => {
+              return (
+                <tr>
+                  <td>{getPlayers(g.players)}</td>
+                  <td>{g.status}</td>
+                  <td>{getWinner(g)}</td>
+                  <td><Link to={`/games/${g.id}`}>View Game</Link></td>
+                </tr>
+              );
+            })
+          }
+        </tbody>
+      );
     };
 
     return (
