@@ -37,8 +37,9 @@ export function listBots (): Action {
               name
             },
             gamesPlayed,
-            gamesWon,
-            status
+            currentScore,
+            status,
+            lastOnlineDatetime
           },
         }
         `,
@@ -75,8 +76,10 @@ export function getBotDetail (botId): Action {
             },
             website,
             description,
-            gamesWon,
             gamesPlayed,
+            gamesWon,
+            gamesDrawn,
+            currentScore,
             user {
               id,
               name

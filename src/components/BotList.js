@@ -1,8 +1,9 @@
 /* @flow */
 import React, { PropTypes } from 'react';
 import BotName from './BotName';
-import BotWinPercent from './BotWinPercent';
+import BotWinPercent from 'components/BotWinPercent';
 import Loading from './Loading';
+import { FormattedDate, FormattedTime } from 'react-intl';
 
 export class BotList extends React.Component {
   // props: Props;
@@ -17,11 +18,46 @@ export class BotList extends React.Component {
       );
     }
 
+    const getOnlineStatus = (bot) => {
+      if (bot.status === 'ONLINE') {
+        return 'Online Now';
+      } else {
+        const lastOnline = new Date(bot.lastOnlineDatetime).toLocaleString();
+        return (
+          <span>
+            <FormattedDate
+              value={lastOnline}
+              format='short'
+              />
+            {' '}
+            <FormattedTime
+              value={lastOnline}
+              />
+          </span>
+        );
+      }
+    };
+
     const bots = () => {
+      const sortedBots = this.props.bots.sort((a, b) => {
+        let scoreDiff = b.currentScore - a.currentScore;
+
+        if (scoreDiff === 0) {
+          scoreDiff = b.gamesPlayed - a.gamesPlayed;
+          if (scoreDiff === 0) {
+            return a.name - b.name;
+          } else {
+            return scoreDiff;
+          }
+        } else {
+          return scoreDiff;
+        }
+      });
+
       return (
         <tbody>
           {
-            this.props.bots.map((b) => {
+            sortedBots.map((b) => {
               return (
                 <tr key={b.id}>
                   <td>
@@ -31,16 +67,15 @@ export class BotList extends React.Component {
                       version={b.version}
                       />
                   </td>
-                  <td>{b.status}</td>
                   <td>{b.gameType.name}</td>
                   <td>{b.gamesPlayed}</td>
-                  <td>{b.gamesWon}</td>
                   <td>
                     <BotWinPercent
+                      currentScore={b.currentScore}
                       gamesPlayed={b.gamesPlayed}
-                      gamesWon={b.gamesWon}
                       />
                   </td>
+                  <td>{getOnlineStatus(b)}</td>
                 </tr>
               );
             })
@@ -54,11 +89,10 @@ export class BotList extends React.Component {
         <thead>
           <tr>
             <th>Name</th>
-            <th>Status</th>
             <th>Game Type</th>
             <th>Games Played</th>
-            <th>Games Won</th>
-            <th>Win Percent</th>
+            <th>Score</th>
+            <th>Last Online</th>
           </tr>
         </thead>
         {bots()}

@@ -4,21 +4,17 @@ import React, { PropTypes } from 'react';
 export class BotWinPercent extends React.Component {
   // props: Props;
   static propTypes = {
+    currentScore: PropTypes.number.isRequired,
     gamesPlayed: PropTypes.number.isRequired,
-    gamesWon: PropTypes.number.isRequired,
     className: PropTypes.string,
   };
 
   render () {
-    const gamesPlayed = this.props.gamesPlayed;
-    const gamesWon = this.props.gamesWon;
-    let pct = (gamesWon / gamesPlayed) * 100;
     let pctStr;
-    if (isNaN(pct)) {
-      pctStr = '-';
+    if (this.props.gamesPlayed > 0) {
+      pctStr = `${this.props.currentScore}%`;
     } else {
-      let roundedPct = Math.round(pct * 100) / 100;
-      pctStr = `${roundedPct}%`;
+      pctStr = '-';
     }
 
     if (this.props.className) {

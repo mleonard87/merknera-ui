@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+import { IntlProvider } from 'react-intl';
 
 export default class Root extends React.Component {
   static propTypes = {
@@ -33,13 +34,24 @@ export default class Root extends React.Component {
   }
 
   render () {
+    const formats = {
+      'date': {
+        'short': {
+          'day': 'numeric',
+          'month': 'short',
+          'year': 'numeric'
+        }
+      }
+    };
     return (
-      <Provider store={this.props.store}>
-        <div style={{ height: '100%' }}>
-          {this.content}
-          {this.devTools}
-        </div>
-      </Provider>
+      <IntlProvider locale='en' formats={formats}>
+        <Provider store={this.props.store}>
+          <div style={{ height: '100%' }}>
+            {this.content}
+            {this.devTools}
+          </div>
+        </Provider>
+      </IntlProvider>
     );
   }
 }

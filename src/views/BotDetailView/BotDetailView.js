@@ -55,6 +55,8 @@ export class BotDetailView extends React.Component {
     let bot = this.props.currentBot;
     const gamesPlayed = bot.gamesPlayed;
     const gamesWon = bot.gamesWon;
+    const gamesDrawn = bot.gamesDrawn;
+    const currentScore = bot.currentScore;
 
     const renderGamesList = () => {
       if (bot.games) {
@@ -78,12 +80,12 @@ export class BotDetailView extends React.Component {
           <div className={styles.playContainer}>
             <h1>
               <BotWinPercent
+                currentScore={currentScore}
                 gamesPlayed={gamesPlayed}
-                gamesWon={gamesWon}
                 />
             </h1>
             <div className={styles.playSummary}>
-              Played: {gamesPlayed}, Won: {gamesWon}
+              Played: {gamesPlayed}, Won: {gamesWon}, Drawn: {gamesDrawn}
             </div>
           </div>
         </div>
