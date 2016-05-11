@@ -59,9 +59,9 @@
       "env": {
         "NODE_ENV": "production",
         "DEBUG": "app:*",
-        "GRAPHQL_URL": "http://api.merknera.com/graphql",
-        "LOGIN_URL": "http://api.merknera.com/login",
-        "LOGOUT_URL": "http://api.merknera.com/logout"
+        "GRAPHQL_URL": "https://api.merknera.com/graphql",
+        "LOGIN_URL": "https://api.merknera.com/login",
+        "LOGOUT_URL": "https://api.merknera.com/logout"
       }
     },
     "start": {
