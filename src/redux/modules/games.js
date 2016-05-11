@@ -91,7 +91,9 @@ export const getGameDetail = (gameId) => {
                 },
                 gameState,
                 winner,
-                status
+                status,
+                startDateTime,
+                endDateTime
               }
             }
           }

@@ -24,6 +24,8 @@ export class MoveList extends React.Component {
                   moveOnClick={this.props.moveOnClick}
                   highlight={parseInt(this.props.highlightMoveIndex) === parseInt(i)}
                   status={m.status}
+                  startDateTime={m.startDateTime}
+                  endDateTime={m.endDateTime}
                   />
               );
             })

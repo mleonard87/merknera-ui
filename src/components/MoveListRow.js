@@ -10,6 +10,8 @@ export class MoveListRow extends React.Component {
     content: PropTypes.string.isRequired,
     highlight: PropTypes.bool.isRequired,
     status: PropTypes.string.isRequired,
+    startDateTime: PropTypes.string.isRequired,
+    endDateTime: PropTypes.string.isRequired,
   };
 
   render () {
@@ -21,9 +23,15 @@ export class MoveListRow extends React.Component {
     }
 
     let awaitingMessage = '';
+    let duration = '-';
     if (this.props.status === 'AWAITING') {
       awaitingMessage = <span className={styles.awaitingIndicator}>(Awaiting Play)</span>;
-      moveClassName = `${moveClassName} ${styles.awaiting}`
+      moveClassName = `${moveClassName} ${styles.awaiting}`;
+    } else {
+      const startDateTime = new Date(this.props.startDateTime);
+      const endDateTime = new Date(this.props.endDateTime);
+      duration = (endDateTime - startDateTime) / 1000;
+      duration = `${duration}s`;
     }
 
     return (
@@ -36,6 +44,9 @@ export class MoveListRow extends React.Component {
         </td>
         <td>
           <div className={styles.moveContent}>{this.props.content}{awaitingMessage}</div>
+        </td>
+        <td className={styles.timingColumn}>
+          {duration}
         </td>
       </tr>
     );
