@@ -43,7 +43,9 @@ const graphqlMiddleware = store => next => action => {
     }).catch(function (ex) {
       console.log('parsing failed', ex);
     });
-    console.log('fetching: ' + action.meta.graphql.query);
+    if (__DEV__) {
+      console.log('fetching: ' + action.meta.graphql.query);
+    }
   }
 };
 
