@@ -69,7 +69,6 @@ export class BotLogsView extends React.Component {
     }
 
     const logs = this.props.currentBot.logs.map((l) => {
-      // const dateStamp = l.createdDatetime.replace(/[TZ]/g, ' ').trim();
       return (
         <div className={styles.logMessage}>
           [<FormattedDate
