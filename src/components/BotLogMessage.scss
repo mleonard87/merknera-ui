@@ -1,0 +1,13 @@
+@import '../styles/colors';
+
+.logMessage:hover {
+  background-color: lighten($secondary-background-color, 40);
+}
+
+.gameLink {
+  text-decoration: none;
+}
+
+.gameLink:hover {
+  text-decoration: underline;
+}

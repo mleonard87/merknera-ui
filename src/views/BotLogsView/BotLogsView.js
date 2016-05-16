@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actions as botActions } from '../../redux/modules/bots';
 import Loading from 'components/Loading';
-import { FormattedDate, FormattedTime } from 'react-intl';
+import BotLogMessage from 'components/BotLogMessage';
 import styles from './BotLogsView.scss';
 
 // We can use Flow (http://flowtype.org/) to type our component's props
@@ -70,19 +70,10 @@ export class BotLogsView extends React.Component {
 
     const logs = this.props.currentBot.logs.map((l) => {
       return (
-        <div className={styles.logMessage}>
-          [<FormattedDate
-            value={l.createdDatetime}
-            format='log'
-            />
-          {' '}
-          <FormattedTime
-            value={l.createdDatetime}
-            format='log'
-            />]
-          {' '}
-          {l.message}
-        </div>
+        <BotLogMessage
+          message={l.message}
+          datetime={l.createdDatetime}
+          />
       );
     });
 
