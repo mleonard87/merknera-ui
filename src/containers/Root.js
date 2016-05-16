@@ -42,8 +42,8 @@ export default class Root extends React.Component {
           'year': 'numeric'
         },
         'log': {
-          'day': 'numeric',
-          'month': 'numeric',
+          'day': '2-digit',
+          'month': '2-digit',
           'year': 'numeric'
         }
       },
