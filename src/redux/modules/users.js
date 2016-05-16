@@ -1,3 +1,4 @@
+import { edgesToArray } from 'redux/utils/relay';
 /* @flow */
 // ------------------------------------
 // Constants
@@ -20,10 +21,14 @@ export function listUsers (): Action {
       graphql: {
         query: `
         {
-          userList {
-            id,
-            name,
-            imageUrl
+          users {
+            edges {
+              node {
+                userId,
+                name,
+                imageUrl
+              }
+            }
           }
         }
         `,
@@ -37,7 +42,7 @@ export function listUsersSuccess (response): Action {
   return {
     type: LIST_USERS_FETCH_SUCCESS,
     payload: {
-      users: response.userList,
+      users: edgesToArray(response.users.edges),
     },
   };
 }

@@ -24,14 +24,14 @@ export class GameList extends React.Component {
         <ul className={styles.playerList}>
           {
             players.map((p) => {
-              if (this.props.contextBot && p.bot.id === this.props.contextBot.id) {
+              if (this.props.contextBot && p.bot.botId === this.props.contextBot.botId) {
                 return null;
               }
 
               return (
                 <li>
                   <BotName
-                    id={p.bot.id}
+                    botId={p.bot.botId}
                     name={p.bot.name}
                     version={p.bot.version}
                     />
@@ -68,7 +68,7 @@ export class GameList extends React.Component {
                   <td>{getPlayers(g.players)}</td>
                   <td>{g.status}</td>
                   <td>{getWinner(g)}</td>
-                  <td><Link to={`/games/${g.id}`}>View Game</Link></td>
+                  <td><Link to={`/games/${g.gameId}`}>View Game</Link></td>
                 </tr>
               );
             })

@@ -59,10 +59,10 @@ export class BotList extends React.Component {
           {
             sortedBots.map((b) => {
               return (
-                <tr key={b.id}>
+                <tr key={b.botId}>
                   <td>
                     <BotName
-                      id={b.id}
+                      botId={b.botId}
                       name={b.name}
                       version={b.version}
                       />

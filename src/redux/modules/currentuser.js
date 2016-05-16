@@ -30,7 +30,7 @@ export function getLoggedInUser (): Action {
         query: `
         {
           currentUser {
-            id,
+            userId,
             name,
             email,
             imageUrl

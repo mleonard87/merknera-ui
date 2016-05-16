@@ -1,3 +1,4 @@
+import { edgesToArray } from 'redux/utils/relay';
 /* @flow */
 // ------------------------------------
 // Constants
@@ -25,21 +26,25 @@ export function listBots (): Action {
       graphql: {
         query: `
         {
-          botList {
-        		id,
-            name,
-            version,
-            user {
-              id,
-              name
-            },
-            gameType {
-              name
-            },
-            gamesPlayed,
-            currentScore,
-            status,
-            lastOnlineDatetime
+          bots {
+            edges {
+              node {
+            		botId,
+                name,
+                version,
+                user {
+                  userId,
+                  name
+                },
+                gameType {
+                  name
+                },
+                gamesPlayed,
+                currentScore,
+                status,
+                lastOnlineDatetime
+              }
+            }
           },
         }
         `,
@@ -53,7 +58,7 @@ export function listBotsSuccess (response): Action {
   return {
     type: LIST_BOTS_FETCH_SUCCESS,
     payload: {
-      bots: response.botList,
+      bots: edgesToArray(response.bots.edges),
     },
   };
 }
@@ -65,8 +70,8 @@ export function getBotDetail (botId): Action {
       graphql: {
         query: `
         query getBot($botId: Int!) {
-          bot(id: $botId) {
-            id,
+          bot(botId: $botId) {
+            botId,
             name,
             gamesWon,
             version,
@@ -81,7 +86,7 @@ export function getBotDetail (botId): Action {
             gamesDrawn,
             currentScore,
             user {
-              id,
+              userId,
               name
             }
           }
@@ -112,26 +117,30 @@ export function listGamesForBot (botId): Action {
       graphql: {
         query: `
         query getGamesForBot($botId: Int!) {
-          gameList(botId: $botId) {
-            id,
-            gameType {
-              name
-            },
-            players {
-              bot {
-                id,
-                name,
-                version,
-              }
-            },
-            winningMove {
-              gameBot {
-                bot {
+          games(botId: $botId) {
+            edges {
+              node {
+                gameId,
+                gameType {
                   name
-                }
+                },
+                players {
+                  bot {
+                    botId,
+                    name,
+                    version,
+                  }
+                },
+                winningMove {
+                  gameBot {
+                    bot {
+                      name
+                    }
+                  }
+                },
+                status
               }
-            },
-            status
+            }
           }
         }
         `,
@@ -148,7 +157,7 @@ export function listGamesForBotSuccess (response): Action {
   return {
     type: LIST_GAMES_FOR_BOT_FETCH_SUCCESS,
     payload: {
-      games: response.gameList,
+      games: edgesToArray(response.games.edges),
     },
   };
 }

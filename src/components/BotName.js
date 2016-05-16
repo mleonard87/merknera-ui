@@ -6,7 +6,7 @@ import styles from './BotName.scss';
 export class BotName extends React.Component {
   // props: Props;
   static propTypes = {
-    id: PropTypes.number.isRequired,
+    botId: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     version: PropTypes.string.isRequired
   };
@@ -14,7 +14,7 @@ export class BotName extends React.Component {
   render () {
     return (
       <div>
-        <Link to={`/bots/${this.props.id}`}>
+        <Link to={`/bots/${this.props.botId}`}>
           {this.props.name}
         </Link>
         <span className={styles.version}>

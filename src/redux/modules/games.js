@@ -1,3 +1,4 @@
+import { edgesToArray } from 'redux/utils/relay';
 /* @flow */
 // ------------------------------------
 // Constants
@@ -23,26 +24,30 @@ export function listGames (): Action {
       graphql: {
         query: `
         {
-          gameList {
-            id,
-            gameType {
-              name
-            },
-            players {
-              bot {
-                id,
-                name,
-                version
-              }
-            },
-            winningMove {
-              gameBot {
-                bot {
+          games {
+            edges {
+              node {
+                gameId,
+                gameType {
                   name
-                }
+                },
+                players {
+                  bot {
+                    botId,
+                    name,
+                    version
+                  }
+                },
+                winningMove {
+                  gameBot {
+                    bot {
+                      name
+                    }
+                  }
+                },
+                status
               }
-            },
-            status
+            }
           }
         }
         `,
@@ -56,7 +61,7 @@ export function listGamesSuccess (response): Action {
   return {
     type: LIST_GAMES_FETCH_SUCCESS,
     payload: {
-      games: response.gameList,
+      games: edgesToArray(response.games.edges),
     },
   };
 }
@@ -68,14 +73,14 @@ export const getGameDetail = (gameId) => {
       graphql: {
         query: `
           query getGame ($gameId: Int!) {
-            game(id: $gameId) {
-              id,
+            game(gameId: $gameId) {
+              gameId,
               gameType {
                 name
               },
               players {
                 bot {
-                  id,
+                  botId,
                   name,
                   version
                 }
