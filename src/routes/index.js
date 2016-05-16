@@ -10,19 +10,25 @@ import CoreLayout from 'layouts/CoreLayout/CoreLayout';
 import HomeView from 'views/HomeView/HomeView';
 import BotsView from 'views/BotsView/BotsView';
 import BotDetailView from 'views/BotDetailView/BotDetailView';
+import BotLogsView from 'views/BotLogsView/BotLogsView';
 import GamesView from 'views/GamesView/GamesView';
 import GameDetailView from 'views/GameDetailView/GameDetailView';
 import UsersView from 'views/UsersView/UsersView';
 import AccountView from 'views/AccountView/AccountView';
+import AccountTokensView from 'views/AccountTokensView/AccountTokensView';
+import AccountBotsView from 'views/AccountBotsView/AccountBotsView';
 
 export default (store) => (
   <Route path='/' component={CoreLayout}>
     <IndexRoute component={HomeView} />
     <Route path='/bots' component={BotsView} />
     <Route path='/bots/:id' component={BotDetailView} />
+    <Route path='/bots/:id/logs' component={BotLogsView} />
     <Route path='/games' component={GamesView} />
     <Route path='/games/:id' component={GameDetailView} />
     <Route path='/users' component={UsersView} />
+    <Route path='/account/tokens' component={AccountTokensView} />
+    <Route path='/account/bots' component={AccountBotsView} />
     <Route path='/account' component={AccountView} />
   </Route>
 );

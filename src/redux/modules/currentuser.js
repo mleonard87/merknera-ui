@@ -1,3 +1,4 @@
+import { edgesToArray } from 'redux/utils/relay';
 /* @flow */
 // ------------------------------------
 // Constants
@@ -13,6 +14,8 @@ export const GENERATE_TOKEN_FETCH_SUCCESS = 'GENERATE_TOKEN_FETCH_SUCCESS';
 export const REVOKE_TOKEN_FETCH = 'REVOKE_TOKEN_FETCH';
 export const REVOKE_TOKEN_FETCH_SUCCESS = 'REVOKE_TOKEN_FETCH_SUCCESS';
 export const CLEAR_TOKEN = 'CLEAR_TOKEN';
+export const GET_BOTS_FETCH = 'GET_BOTS_FETCH';
+export const GET_BOTS_FETCH_SUCCESS = 'GET_BOTS_FETCH_SUCCESS';
 
 // ------------------------------------
 // Actions
@@ -160,6 +163,48 @@ export function clearUserToken (response): Action {
   };
 }
 
+export function getBots (userId): Action {
+  return {
+    type: GET_BOTS_FETCH,
+    meta: {
+      graphql: {
+        query: `
+        query getUserBots($userId: Int!) {
+          bots(userId: $userId) {
+            edges {
+              node {
+                botId,
+                name,
+                version,
+                gameType {
+                  name
+                },
+                gamesPlayed,
+                currentScore,
+                lastOnlineDatetime
+              }
+            }
+          }
+        }
+        `,
+        variables: `{
+          "userId": ${userId}
+        }`,
+        success: getBotsSuccess,
+      },
+    },
+  };
+}
+
+export function getBotsSuccess (response): Action {
+  return {
+    type: GET_BOTS_FETCH_SUCCESS,
+    payload: {
+      bots: edgesToArray(response.bots.edges),
+    },
+  };
+}
+
 export const actions = {
   getLoggedInUser,
   clearLoggedInUser,
@@ -168,6 +213,7 @@ export const actions = {
   generateUserToken,
   clearUserToken,
   revokeUserToken,
+  getBots,
 };
 
 // ------------------------------------
@@ -251,6 +297,12 @@ const ACTION_HANDLERS = {
     return {
       ...state,
       tokens: newTokens,
+    };
+  },
+  [GET_BOTS_FETCH_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      bots: action.payload.bots
     };
   },
 };

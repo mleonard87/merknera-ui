@@ -10,6 +10,8 @@ export const GET_BOT_DETAIL_FETCH_SUCCESS = 'GET_BOT_DETAIL_FETCH_SUCCESS';
 export const LIST_GAMES_FOR_BOT_FETCH = 'LIST_GAMES_FOR_BOT_FETCH';
 export const LIST_GAMES_FOR_BOT_FETCH_SUCCESS = 'LIST_GAMES_FOR_BOT_FETCH_SUCCESS';
 export const BOT_DETAIL_CLEAR = 'BOT_DETAIL_CLEAR';
+export const LIST_BOT_LOGS_FETCH = 'LIST_BOT_LOGS_FETCH';
+export const LIST_BOT_LOGS_FETCH_SUCCESS = 'LIST_BOT_LOGS_FETCH_SUCCESS';
 
 // ------------------------------------
 // Actions
@@ -168,11 +170,45 @@ export function clearBotDetail (): Action {
   };
 }
 
+export function listBotLogs (botId): Action {
+  return {
+    type: LIST_BOT_LOGS_FETCH,
+    meta: {
+      graphql: {
+        query: `
+        query listBotLogs($botId: Int!) {
+          bot(botId: $botId) {
+            logs {
+              message
+              createdDatetime
+            }
+          }
+        }
+        `,
+        variables: `{
+          "botId": "${botId}"
+        }`,
+        success: listBotLogsSuccess,
+      },
+    },
+  };
+}
+
+export function listBotLogsSuccess (response): Action {
+  return {
+    type: LIST_BOT_LOGS_FETCH_SUCCESS,
+    payload: {
+      logs: response.bot.logs,
+    },
+  };
+}
+
 export const actions = {
   listBots,
   getBotDetail,
   listGamesForBot,
   clearBotDetail,
+  listBotLogs,
 };
 
 // ------------------------------------
@@ -212,6 +248,15 @@ const ACTION_HANDLERS = {
 
     return newState;
   },
+  [LIST_BOT_LOGS_FETCH_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      currentBot: {
+        ...state.currentBot,
+        logs: action.payload.logs,
+      },
+    };
+  }
 };
 
 // ------------------------------------

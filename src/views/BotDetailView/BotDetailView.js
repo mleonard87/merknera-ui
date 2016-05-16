@@ -49,7 +49,7 @@ export class BotDetailView extends React.Component {
 
   render () {
     if (this.props.currentBot === undefined) {
-      return (<span>Loading...</span>);
+      return <Loading />;
     }
 
     let bot = this.props.currentBot;

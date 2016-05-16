@@ -1,0 +1,20 @@
+@import '../../styles/colors';
+
+.titleVersion {
+  font-size: 0.6em;
+  font-weight: normal;
+  color: $secondary-background-color;
+}
+
+.botHeading {
+  display: inline;
+}
+
+.logContainer {
+  white-space: pre-line;
+  font-family: monospace;
+}
+
+.logMessage:hover {
+  background-color: lighten($secondary-background-color, 40);
+}

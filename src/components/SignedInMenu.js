@@ -17,8 +17,18 @@ export class SignedInMenu extends React.Component {
     return (
       <ul className={styles.userMenuList}>
         <li>
+          <Link to='/account/bots' className={styles.userMenuLink}>
+            My Bots
+          </Link>
+        </li>
+        <li>
+          <Link to='/account/tokens' className={styles.userMenuLink}>
+            Tokens
+          </Link>
+        </li>
+        <li>
           <Link to='/account' className={styles.userMenuLink}>
-            My Account
+            Account
           </Link>
         </li>
         <li onClick={this.handleOnClickGoogleSignOut}>

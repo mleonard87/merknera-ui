@@ -40,8 +40,13 @@ export default class Root extends React.Component {
           'day': 'numeric',
           'month': 'short',
           'year': 'numeric'
+        },
+        'log': {
+          'day': 'numeric',
+          'month': 'numeric',
+          'year': 'numeric'
         }
-      }
+      },
     };
     return (
       <IntlProvider locale='en' formats={formats}>
