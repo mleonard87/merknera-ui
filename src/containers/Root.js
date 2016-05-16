@@ -47,9 +47,16 @@ export default class Root extends React.Component {
           'year': 'numeric'
         }
       },
+      'time': {
+        'log': {
+          'hour': '2-digit',
+          'minute': '2-digit',
+          'hour12': false,
+        }
+      },
     };
     return (
-      <IntlProvider locale='en' formats={formats}>
+      <IntlProvider locale='en-AU' formats={formats}>
         <Provider store={this.props.store}>
           <div style={{ height: '100%' }}>
             {this.content}
