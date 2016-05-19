@@ -256,7 +256,7 @@ const ACTION_HANDLERS = {
         logs: action.payload.logs,
       },
     };
-  }
+  },
 };
 
 // ------------------------------------

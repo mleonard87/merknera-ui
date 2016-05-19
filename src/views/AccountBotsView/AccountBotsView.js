@@ -2,9 +2,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getBots } from '../../redux/modules/currentuser';
+import { getBots, deleteBot } from '../../redux/modules/currentuser';
 import UserBotList from 'components/UserBotList';
-import styles from './AccountBotsView.scss';
 
 // We can use Flow (http://flowtype.org/) to type our component's props
 // and state. For convenience we've included both regular propTypes and
@@ -22,6 +21,7 @@ export class AccountBotsView extends React.Component {
   // props: Props;
   static propTypes = {
     getBots: PropTypes.func.isRequired,
+    deleteBot: PropTypes.func.isRequired,
     loggedInUser: PropTypes.object,
   };
 
@@ -37,6 +37,13 @@ export class AccountBotsView extends React.Component {
     };
   }
 
+  handleDeleteBot = (botId, botName) => {
+    const doDelete = confirm(`Deleting a bot cannot be undone.\n\nAre you sure you want to delete ${botName}?`);
+    if (doDelete) {
+      this.props.deleteBot(botId);
+    }
+  }
+
   render () {
     if (!this.props.loggedInUser) {
       return (
@@ -49,6 +56,7 @@ export class AccountBotsView extends React.Component {
         <h1>My Bots</h1>
         <UserBotList
           bots={this.props.loggedInUser.bots}
+          handleDeleteBot={this.handleDeleteBot}
           />
       </div>
     );
@@ -62,6 +70,7 @@ const mapStateToProps = (state) => ({
 const mapDisptachToProps = (dispatch) => {
   return {
     getBots: bindActionCreators(getBots, dispatch),
+    deleteBot: bindActionCreators(deleteBot, dispatch),
   };
 };
 

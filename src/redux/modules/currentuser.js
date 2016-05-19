@@ -16,6 +16,8 @@ export const REVOKE_TOKEN_FETCH_SUCCESS = 'REVOKE_TOKEN_FETCH_SUCCESS';
 export const CLEAR_TOKEN = 'CLEAR_TOKEN';
 export const GET_BOTS_FETCH = 'GET_BOTS_FETCH';
 export const GET_BOTS_FETCH_SUCCESS = 'GET_BOTS_FETCH_SUCCESS';
+export const DELETE_BOT_FETCH = 'DELETE_BOT_FETCH';
+export const DELETE_BOT_FETCH_SUCCESS = 'DELETE_BOT_FETCH_SUCCESS';
 
 // ------------------------------------
 // Actions
@@ -205,6 +207,34 @@ export function getBotsSuccess (response): Action {
   };
 }
 
+export function deleteBot (botId): Action {
+  return {
+    type: DELETE_BOT_FETCH,
+    meta: {
+      graphql: {
+        query: `
+        mutation deleteBot($botId: Int!) {
+          deleteBot(botId: $botId)
+        }
+        `,
+        variables: `{
+          "botId": "${botId}"
+        }`,
+        success: deleteBotSuccess,
+      },
+    },
+  };
+}
+
+export function deleteBotSuccess (response): Action {
+  return {
+    type: DELETE_BOT_FETCH_SUCCESS,
+    payload: {
+      deletedBotId: response.deleteBot,
+    },
+  };
+}
+
 export const actions = {
   getLoggedInUser,
   clearLoggedInUser,
@@ -214,6 +244,7 @@ export const actions = {
   clearUserToken,
   revokeUserToken,
   getBots,
+  deleteBot,
 };
 
 // ------------------------------------
@@ -303,6 +334,24 @@ const ACTION_HANDLERS = {
     return {
       ...state,
       bots: action.payload.bots
+    };
+  },
+  [DELETE_BOT_FETCH_SUCCESS]: (state, action) => {
+    let newBots = [];
+
+    state.bots.forEach((b) => {
+      if (b.botId !== action.payload.deletedBotId) {
+        let newBot = {
+          ...b
+        };
+
+        newBots.push(newBot);
+      }
+    });
+
+    return {
+      ...state,
+      bots: newBots,
     };
   },
 };

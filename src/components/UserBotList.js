@@ -5,11 +5,18 @@ import BotName from './BotName';
 import BotWinPercent from 'components/BotWinPercent';
 import Loading from './Loading';
 import { FormattedDate, FormattedTime } from 'react-intl';
+import styles from './UserBotList.scss';
 
 export class UserBotList extends React.Component {
   // props: Props;
   static propTypes = {
     bots: PropTypes.array.isRequired,
+    handleDeleteBot: PropTypes.func.isRequired,
+  };
+
+  handleDeleteBot = (e, botId, botName) => {
+    e.preventDefault();
+    this.props.handleDeleteBot(botId, botName);
   };
 
   render () {
@@ -78,9 +85,19 @@ export class UserBotList extends React.Component {
                   </td>
                   <td>{getOnlineStatus(b)}</td>
                   <td>
-                    <Link to={`/bots/${b.botId}/logs`}>
+                    <Link
+                      to={`/bots/${b.botId}/logs`}
+                      className={styles.actionLink}
+                      >
                       View Logs
                     </Link>
+                    <a
+                      href='#'
+                      onClick={(e) => { this.handleDeleteBot(e, b.botId, b.name) }}
+                      className={styles.actionLink}
+                      >
+                      Delete Bot
+                    </a>
                   </td>
                 </tr>
               );
