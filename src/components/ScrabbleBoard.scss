@@ -1,0 +1,98 @@
+$ls-background-color: rgb(166, 210, 222);
+$ws-background-color: rgb(222, 167, 167);
+$start-background-color: rgb(135, 222, 136);
+$played-background-color: rgb(255, 236, 69);
+$new-played-background-color: rgb(174, 247, 233); // rgb(179, 69, 255);
+
+.board {
+  width: 30em;
+}
+
+.square {
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
+  vertical-align: middle;
+  text-align: center;
+  border: 1px solid black;
+  position: relative;
+}
+
+.square2LS {
+  composes: square;
+  background-color: $ls-background-color;
+}
+
+.square3LS {
+  composes: square;
+  background-color: darken($ls-background-color, 30);
+}
+
+.square4LS {
+  composes: square;
+  background-color: darken($ls-background-color, 60);
+}
+
+.squareXLS {
+  composes: square;
+  background-color: darken($ls-background-color, 90);
+}
+
+.square2WS {
+  composes: square;
+  background-color: $ws-background-color;
+}
+
+.square3WS {
+  composes: square;
+  background-color: darken($ws-background-color, 30);
+}
+
+.square4WS {
+  composes: square;
+  background-color: darken($ws-background-color, 60);
+}
+
+.squareXWS {
+  composes: square;
+  background-color: darken($ws-background-color, 90);
+}
+
+.squareStart {
+  composes: square;
+  background-color: $start-background-color;
+}
+
+.row {
+  display: block;
+  background-color: #007701;
+}
+
+.board:hover .square2LS .tile,
+.board:hover .square3LS .tile,
+.board:hover .square4LS .tile,
+.board:hover .squareXLS .tile,
+.board:hover .square2WS .tile,
+.board:hover .square3WS .tile,
+.board:hover .square4WS .tile,
+.board:hover .squareXWS .tile,
+{
+  opacity: 0;
+}
+
+.tile {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 2em;
+  height: 2em;
+  background-color: $played-background-color;
+  border: 1px solid black;
+}
+
+.tileNew {
+  composes: tile;
+  background-color: $new-played-background-color;
+  font-weight: bold;
+}
